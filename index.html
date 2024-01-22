@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <title>Форма заказа</title>
+    
+</head>
+<body>
+
+<h1>Форма заказа</h1>
+
+<form id="orderForm" class="callback">
+    <div class="block_form">
+        <div class="block_form_colum">
+            <img src="img/product1.png" alt="Товар 1">
+            <label for="quantity1">Количество товара:</label>
+            <input type="number" id="quantity1" name="quantity1" min="1" required>
+        </div>
+
+        <div class="block_form_colum">
+            <img src="img/product2.png" alt="Товар 2">
+            <label for="quantity2">Количество товара:</label>
+            <input type="number" id="quantity2" name="quantity2" min="1" required>
+        </div>
+
+        <div class="block_form_colum">
+            <img src="img/product3.png" alt="Товар 3">
+            <label for="quantity3">Количество товара:</label>
+            <input type="number" id="quantity3" name="quantity3" min="1" required>
+        </div>
+    </div>
+    <label for="comment">Комментарий (не менее 100 символов):</label>
+    <textarea id="comment" name="comment" minlength="100" required></textarea>
+
+    <label for="contacts">Контактная информация:</label>
+    <input type="text" id="contacts" name="contacts" required>
+
+    <button type="button" id="submitButton" onclick="validateForm()">Отправить</button>
+</form>
+
+<!-- Скрипты -->
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+
+<script>
+function validateForm() {
+    var contacts = $("#contacts").val();
+
+    if (!contacts) {
+        alert("Поле 'Контактная информация' обязательно для заполнения.");
+    } else {
+        sendEmail();
+    }
+}
+
+function sendEmail() {
+    var formData = $("#orderForm").serialize();
+
+    $.ajax({
+        type: "POST",
+        url: "process_form.php",
+        data: formData,
+        success: function() {
+            location.href = 'thankyou.html';
+        }
+    });
+}
+</script>
+
+</body>
+</html>
